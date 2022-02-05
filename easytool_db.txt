@@ -1,0 +1,104 @@
+* User
+- Id
+- DeviceId
+- Name
+- Note
+- Tag
+- Balance
+- CreatedAt
+- UpdatedAt
+=> Thêm, sửa, xóa user, change balance cho user  => Done
+
+* UserRole
+- Id
+- UserId
+- RoleId
+- RoleName (trial, basic, pro)
+- Note
+- Tag
+=> Thêm, sửa, xóa userrole => Done
+
+* Software
+- Id
+- SoftwareName
+- SoftwareDescription
+- SoftwareImage
+- CreatedAt
+- UpdatedAt
+- Note
+- Tag
+=> Thêm, sửa, xóa software => Done
+
+* SoftwareOffer
+- Id
+- SoftwareId
+- OfferName
+- Price
+- OfferDays
+- CreatedAt
+- UpdatedAt
+- Note
+- Tag
+=> Thêm, sửa, xóa softwareoffer => Done
+
+* Subscription
+- UserId
+- SoftwareId
+- SubcribedAt
+- ExpiredDate
+- CreatedAt
+- UpdatedAt
+- Note
+- Tag
+=> Thêm, sửa, xóa subcription => Done
+
+* UserActivity
+- UserId
+- ActivityName
+- Description
+- CreatedAt
+- UpdatedAt
+- Note
+- Tag
+=> Thêm, sửa, xóa, search theo user, activityName
+
+* CrawlerData (bảng này chứa nhiều data nếu đc cho a lưu tầm vài triệu records)
+- Id
+- UserId
+- PropertyNames
+- CreatedAt
+- Category
+- UpdatedAt
+- WebsiteUrl
+- Property1
+- Property2
+- Property3
+- Property4
+- Property5
+- Property6
+- Property7
+- Property8
+- Property9
+- Property10
+- Property11
+- Property12
+- Property13
+- Property14
+- Property15
+- Property16
+- Property17
+- Property18
+- Property19
+- Property20
+- Note
+- Tag
+=> Thêm, sửa, xóa CrawlerData, Tìm theo category, userid, createdat, updatedat, websiteurl
+
+* UserResource
+- UserId
+- ResourceType (DataFile, AddInFile,...)
+- ResourceUrl
+- UpdatedAt
+- CreatedAt
+- Note
+- Tag
