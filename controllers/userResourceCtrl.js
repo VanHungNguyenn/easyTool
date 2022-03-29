@@ -74,14 +74,28 @@ const userResourceCtrl = {
 	},
 	getUserResource: async (req, res) => {
 		try {
-			const { page, limit } = req.query
+			const { page, limit, idStart, idEnd } = req.query
 
-			const result = await UserResource.find()
+			const conditions = {}
+
+			if (idStart || idEnd) {
+				conditions['id_user_resource'] = {}
+
+				if (idStart) {
+					conditions['id_user_resource']['$gte'] = idStart
+				}
+
+				if (idEnd) {
+					conditions['id_user_resource']['$lte'] = idEnd
+				}
+			}
+
+			const result = await UserResource.find(conditions)
 				.sort({ createAt: 1 })
 				.limit(limit ? Number(limit) : null)
 				.skip(page ? (Number(page) - 1) * Number(limit) : null)
 
-			const count = await UserResource.countDocuments()
+			const count = await UserResource.countDocuments(conditions)
 
 			res.status(200).json({
 				total_db: count,

@@ -3,11 +3,6 @@ const AutoIncrement = require('mongoose-sequence')(mongoose)
 
 const userRoleSchema = new mongoose.Schema(
 	{
-		id: {
-			type: String,
-			unique: true,
-			required: true,
-		},
 		userId: {
 			type: String,
 			required: true,
@@ -32,6 +27,6 @@ const userRoleSchema = new mongoose.Schema(
 	{ timestamps: true }
 )
 
-userRoleSchema.plugin(AutoIncrement, { inc_field: 'id_user_role' })
+userRoleSchema.plugin(AutoIncrement, { inc_field: 'id_role' })
 
 module.exports = mongoose.model('UserRole', userRoleSchema)

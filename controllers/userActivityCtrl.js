@@ -74,14 +74,28 @@ const userActivityCtrl = {
 	},
 	getUserActivity: async (req, res) => {
 		try {
-			const { page, limit } = req.query
+			const { page, limit, idStart, idEnd } = req.query
 
-			const result = await UserActivity.find()
-				.sort({ createAt: 1 })
+			const conditions = {}
+
+			if (idStart || idEnd) {
+				conditions['id_user_activity'] = {}
+
+				if (idStart) {
+					conditions['id_user_activity']['$gte'] = idStart
+				}
+
+				if (idEnd) {
+					conditions['id_user_activity']['$lte'] = idEnd
+				}
+			}
+
+			const result = await UserActivity.find(conditions)
+				.sort({ createdAt: 1 })
 				.limit(limit ? Number(limit) : null)
 				.skip(page ? (Number(page) - 1) * Number(limit) : null)
 
-			const count = await UserActivity.countDocuments()
+			const count = await UserActivity.countDocuments(conditions)
 
 			res.status(200).json({
 				total_db: count,

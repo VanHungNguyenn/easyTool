@@ -1,5 +1,5 @@
 * User
-- Id
+- Id (id_user)
 - DeviceId
 - Name
 - Note
@@ -10,7 +10,7 @@
 => Thêm, sửa, xóa user, change balance cho user  => Done
 
 * UserRole
-- Id
+- Id (id_role)
 - UserId
 - RoleId
 - RoleName (trial, basic, pro)
@@ -50,7 +50,7 @@
 - UpdatedAt
 - Note
 - Tag
-=> Thêm, sửa, xóa subcription => Done
+=> Thêm, sửa, xóa subcription  => Done
 
 * UserActivity
 - UserId
@@ -60,7 +60,7 @@
 - UpdatedAt
 - Note
 - Tag
-=> Thêm, sửa, xóa, search theo user, activityName
+=> Thêm, sửa, xóa, search theo user, activityName => Done
 
 * CrawlerData (bảng này chứa nhiều data nếu đc cho a lưu tầm vài triệu records)
 - Id

@@ -3,15 +3,14 @@ const SoftwareOffer = require('../models/softwareOfferModel')
 const softwareOfferCtrl = {
 	addOffer: async (req, res) => {
 		try {
-			const { id, softwareId, offerName, price, offerDay, note, tag } =
+			const { softwareId, offerName, price, offerDay, note, tag } =
 				req.body
 
-			if (!id || !softwareId || !offerName || !price) {
+			if (!softwareId || !offerName || !price) {
 				return res.status(400).json({ msg: 'Please fill in all field' })
 			}
 
 			const newSoftwareOffer = new SoftwareOffer({
-				id,
 				softwareId,
 				offerName,
 				price,
@@ -37,7 +36,7 @@ const softwareOfferCtrl = {
 				req.body
 
 			await SoftwareOffer.findOneAndUpdate(
-				{ id },
+				{ id_offer: id },
 				{
 					softwareId,
 					offerName,
@@ -61,29 +60,45 @@ const softwareOfferCtrl = {
 		try {
 			const { id } = req.params
 
-			await SoftwareOffer.findOneAndDelete({ id }).then((offer) => {
-				if (!offer) {
-					return res.status(400).json({ msg: 'Offer not found' })
-				} else {
-					return res
-						.status(200)
-						.json({ msg: 'Delete offer successfully' })
+			await SoftwareOffer.findOneAndDelete({ id_offer: id }).then(
+				(offer) => {
+					if (!offer) {
+						return res.status(400).json({ msg: 'Offer not found' })
+					} else {
+						return res
+							.status(200)
+							.json({ msg: 'Delete offer successfully' })
+					}
 				}
-			})
+			)
 		} catch (error) {
 			return res.status(500).json({ msg: error.message })
 		}
 	},
 	getOffer: async (req, res) => {
 		try {
-			const { page, limit } = req.query
+			const { page, limit, idStart, idEnd } = req.query
 
-			const result = await SoftwareOffer.find()
-				.sort({ createAt: 1 })
+			const conditions = {}
+
+			if (idStart || idEnd) {
+				conditions['id_offer'] = {}
+
+				if (idStart) {
+					conditions['id_offer']['$gte'] = idStart
+				}
+
+				if (idEnd) {
+					conditions['id_offer']['$lte'] = idEnd
+				}
+			}
+
+			const result = await SoftwareOffer.find(conditions)
+				.sort({ createdAt: -1 })
 				.limit(limit ? Number(limit) : null)
 				.skip(page ? (Number(page) - 1) * Number(limit) : null)
 
-			const count = await SoftwareOffer.countDocuments()
+			const count = await SoftwareOffer.countDocuments(conditions)
 
 			res.status(200).json({
 				total_db: count,

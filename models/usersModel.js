@@ -3,11 +3,6 @@ const AutoIncrement = require('mongoose-sequence')(mongoose)
 
 const usersSchema = new mongoose.Schema(
 	{
-		id: {
-			type: String,
-			unique: true,
-			required: true,
-		},
 		deviceId: {
 			type: String,
 			required: true,

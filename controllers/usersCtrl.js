@@ -1,16 +1,18 @@
 const Users = require('../models/usersModel')
 
 const usersCtrl = {
+	// @route POST user/add
+	// @desc Add new user
+	// @access Private
 	addUser: async (req, res) => {
 		try {
-			const { id, deviceId, name, note, tag, balance } = req.body
+			const { deviceId, name, note, tag, balance } = req.body
 
-			if (!id || !deviceId || !name) {
+			if (!deviceId || !name) {
 				return res.status(400).json({ msg: 'Please fill in all field' })
 			}
 
 			const newUser = new Users({
-				id,
 				deviceId,
 				name,
 				note,
@@ -27,6 +29,9 @@ const usersCtrl = {
 			return res.status(500).json({ msg: error.message })
 		}
 	},
+	// @route PATCH user/update/:id
+	// @desc Update user
+	// @access Private
 	updateUser: async (req, res) => {
 		try {
 			const { id } = req.params
@@ -34,7 +39,7 @@ const usersCtrl = {
 			const { deviceId, name, note, tag, balance } = req.body
 
 			await Users.findOneAndUpdate(
-				{ id },
+				{ id_user: id },
 				{
 					deviceId,
 					name,
@@ -46,18 +51,23 @@ const usersCtrl = {
 				if (!user) {
 					return res.status(400).json({ msg: 'User not found' })
 				} else {
-					return res.status(200).json({ msg: 'Updated successfully' })
+					return res
+						.status(200)
+						.json({ msg: 'Updated user successfully' })
 				}
 			})
 		} catch (error) {
 			return res.status(500).json({ msg: error.message })
 		}
 	},
+	// @route DELETE user/delete/:id
+	// @desc Delete user
+	// @access Private
 	deleteUser: async (req, res) => {
 		try {
 			const { id } = req.params
 
-			await Users.findOneAndDelete({ id }).then((user) => {
+			await Users.findOneAndDelete({ id_user: id }).then((user) => {
 				if (!user) {
 					return res.status(400).json({ msg: 'User not found' })
 				} else {
@@ -70,16 +80,33 @@ const usersCtrl = {
 			return res.status(500).json({ msg: error.message })
 		}
 	},
+	// @route GET user/info
+	// @desc Get user info
+	// @access Private
 	getUser: async (req, res) => {
 		try {
-			const { page, limit } = req.query
+			const { page, limit, idStart, idEnd } = req.query
 
-			const result = await Users.find()
-				.sort({ createAt: 1 })
+			const conditions = {}
+
+			if (idStart || idEnd) {
+				conditions['id_user'] = {}
+
+				if (idStart) {
+					conditions['id_user']['$gte'] = idStart
+				}
+
+				if (idEnd) {
+					conditions['id_user']['$lte'] = idEnd
+				}
+			}
+
+			const result = await Users.find(conditions)
+				.sort({ createdAt: -1 })
 				.limit(limit ? Number(limit) : null)
 				.skip(page ? (Number(page) - 1) * Number(limit) : null)
 
-			const count = await Users.countDocuments()
+			const count = await Users.countDocuments(conditions)
 
 			res.status(200).json({
 				total_db: count,
@@ -90,6 +117,9 @@ const usersCtrl = {
 			return res.status(500).json({ msg: error.message })
 		}
 	},
+	// @route PATCH user/change_balance/:id
+	// @desc Change balance user
+	// @access Private
 	changeBalanceUser: async (req, res) => {
 		try {
 			const { id } = req.params
@@ -97,7 +127,7 @@ const usersCtrl = {
 			const { balance } = req.body
 
 			await Users.findOneAndUpdate(
-				{ id },
+				{ id_user: id },
 				{
 					balance,
 				}
