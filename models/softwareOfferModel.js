@@ -27,6 +27,10 @@ const softwareOfferSchema = new mongoose.Schema(
 			type: String,
 			default: null,
 		},
+		maximumProduct: {
+			type: Number,
+			default: 0,
+		},
 	},
 	{
 		timestamps: true,

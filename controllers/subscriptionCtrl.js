@@ -3,8 +3,17 @@ const Subscription = require('../models/subscriptionModel')
 const subscriptionCtrl = {
 	addSubscription: async (req, res) => {
 		try {
-			const { userId, softwareId, subcribedAt, expiredDate, note, tag } =
-				req.body
+			const {
+				userId,
+				softwareId,
+				subcribedAt,
+				expiredDate,
+				note,
+				tag,
+				offerId,
+				remainingProduct,
+				type,
+			} = req.body
 
 			if (!userId || !softwareId || !subcribedAt || !expiredDate) {
 				return res.status(400).json({ msg: 'Please fill in all field' })
@@ -17,6 +26,9 @@ const subscriptionCtrl = {
 				expiredDate,
 				note,
 				tag,
+				offerId,
+				remainingProduct,
+				type,
 			})
 
 			await newSubscription.save().then(() => {
@@ -32,8 +44,17 @@ const subscriptionCtrl = {
 		try {
 			const { id_subscription } = req.params
 
-			const { softwareId, userId, subcribedAt, expiredDate, note, tag } =
-				req.body
+			const {
+				softwareId,
+				userId,
+				subcribedAt,
+				expiredDate,
+				note,
+				tag,
+				offerId,
+				remainingProduct,
+				type,
+			} = req.body
 
 			await Subscription.findOneAndUpdate(
 				{ id_subscription },
@@ -44,6 +65,9 @@ const subscriptionCtrl = {
 					expiredDate,
 					note,
 					tag,
+					offerId,
+					remainingProduct,
+					type,	
 				}
 			).then((sub) => {
 				if (!sub) {

@@ -27,6 +27,18 @@ const subscriptionSchema = new mongoose.Schema(
 			type: String,
 			default: null,
 		},
+		offerId: {
+			type: String,
+			default: null,
+		},
+		remainingProduct: {
+			type: Number,
+			default: 0,
+		},
+		type: {
+			type: String,
+			default: null,
+		},
 	},
 	{ timestamps: true }
 )

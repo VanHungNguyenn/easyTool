@@ -3,8 +3,15 @@ const SoftwareOffer = require('../models/softwareOfferModel')
 const softwareOfferCtrl = {
 	addOffer: async (req, res) => {
 		try {
-			const { softwareId, offerName, price, offerDay, note, tag } =
-				req.body
+			const {
+				softwareId,
+				offerName,
+				price,
+				offerDay,
+				note,
+				tag,
+				maximumProduct,
+			} = req.body
 
 			if (!softwareId || !offerName || !price) {
 				return res.status(400).json({ msg: 'Please fill in all field' })
@@ -17,6 +24,7 @@ const softwareOfferCtrl = {
 				offerDay,
 				note,
 				tag,
+				maximumProduct,
 			})
 
 			await newSoftwareOffer.save().then(() => {
@@ -32,8 +40,15 @@ const softwareOfferCtrl = {
 		try {
 			const { id } = req.params
 
-			const { softwareId, offerName, price, offerDay, note, tag } =
-				req.body
+			const {
+				softwareId,
+				offerName,
+				price,
+				offerDay,
+				note,
+				tag,
+				maximumProduct,
+			} = req.body
 
 			await SoftwareOffer.findOneAndUpdate(
 				{ id_offer: id },
@@ -44,6 +59,7 @@ const softwareOfferCtrl = {
 					offerDay,
 					note,
 					tag,
+					maximumProduct,
 				}
 			).then((offer) => {
 				if (!offer) {
