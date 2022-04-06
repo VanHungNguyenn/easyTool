@@ -124,9 +124,11 @@ const subscriptionCtrl = {
 						.status(400)
 						.json({ msg: 'Subscription not found' })
 				} else {
-					return res
-						.status(200)
-						.json({ msg: 'Get subscription successfully' })
+					return res.status(200).json({
+						msg: 'Get subscription successfully',
+						total: sub.length,
+						result: sub,
+					})
 				}
 			})
 		} catch (error) {
