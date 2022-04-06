@@ -6,5 +6,6 @@ router.put('/update/:id', usersCtrl.updateUser)
 router.put('/change_balance/:id', usersCtrl.changeBalanceUser)
 router.delete('/delete/:id', usersCtrl.deleteUser)
 router.get('/info', usersCtrl.getUser)
+router.get('/detail/:deviceId', usersCtrl.getUserDetail)
 
 module.exports = router

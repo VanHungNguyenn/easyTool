@@ -144,6 +144,24 @@ const usersCtrl = {
 			return res.status(500).json({ msg: error.message })
 		}
 	},
+	// @route GET user/detail/:deviceId
+	// @desc Get user detail
+	// @access Private
+	getUserDetail: async (req, res) => {
+		try {
+			const { deviceId } = req.params
+
+			const result = await Users.findOne({ deviceId })
+
+			if (!result) {
+				return res.status(400).json({ msg: 'User not found' })
+			} else {
+				return res.status(200).json({ result })
+			}
+		} catch (error) {
+			return res.status(500).json({ msg: error.message })
+		}
+	},
 }
 
 module.exports = usersCtrl

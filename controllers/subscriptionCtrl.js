@@ -30,14 +30,16 @@ const subscriptionCtrl = {
 	},
 	updateSubscription: async (req, res) => {
 		try {
-			const { userId } = req.params
+			const { id_subscription } = req.params
 
-			const { softwareId, subcribedAt, expiredDate, note, tag } = req.body
+			const { softwareId, userId, subcribedAt, expiredDate, note, tag } =
+				req.body
 
 			await Subscription.findOneAndUpdate(
-				{ userId },
+				{ id_subscription },
 				{
 					softwareId,
+					userId,
 					subcribedAt,
 					expiredDate,
 					note,
@@ -58,19 +60,21 @@ const subscriptionCtrl = {
 	},
 	deleteSubscription: async (req, res) => {
 		try {
-			const { userId } = req.params
+			const { id_subscription } = req.params
 
-			await Subscription.findOneAndDelete({ userId }).then((sub) => {
-				if (!sub) {
-					return res
-						.status(400)
-						.json({ msg: 'Subscription not found' })
-				} else {
-					return res
-						.status(200)
-						.json({ msg: 'Delete subscription successfully' })
+			await Subscription.findOneAndDelete({ id_subscription }).then(
+				(sub) => {
+					if (!sub) {
+						return res
+							.status(400)
+							.json({ msg: 'Subscription not found' })
+					} else {
+						return res
+							.status(200)
+							.json({ msg: 'Delete subscription successfully' })
+					}
 				}
-			})
+			)
 		} catch (error) {
 			return res.status(500).json({ msg: error.message })
 		}

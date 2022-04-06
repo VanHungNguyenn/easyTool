@@ -11,6 +11,7 @@
     > PUT /user/change_balance/:id
     > DELETE /user/delete/:id
     > GET /user/info(?page=1&limit=10&idStart=1&idEnd=10)
+    > GET /user/detail/:deviceId
 
 2. User Role { userId, roleId, roleName, note, tag }
 
@@ -36,8 +37,8 @@
 5. Subscription { userId, softwareId, subcribedAt, expiredDate, note, tag }
 
     > POST /subscription/add
-    > PUT /subscription/update/:userId
-    > DELETE /subscription/delete/:userId
+    > PUT /subscription/update/:id_subscription
+    > DELETE /subscription/delete/:id_subscription
     > GET /subscription/info(?page=1&limit=10&idStart=1&idEnd=10)
 
 6. User Activity { userId, activityName, description, note, tag }
