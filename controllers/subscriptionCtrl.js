@@ -113,6 +113,26 @@ const subscriptionCtrl = {
 			return res.status(500).json({ msg: error.message })
 		}
 	},
+	getSubscriptionDetail: async (req, res) => {
+		// get all subscriptions userId = x
+		try {
+			const { userId } = req.params
+
+			const result = await Subscription.find({ userId }).then((sub) => {
+				if (!sub) {
+					return res
+						.status(400)
+						.json({ msg: 'Subscription not found' })
+				} else {
+					return res
+						.status(200)
+						.json({ msg: 'Get subscription successfully' })
+				}
+			})
+		} catch (error) {
+			return res.status(500).json({ msg: error.message })
+		}
+	},
 }
 
 module.exports = subscriptionCtrl
