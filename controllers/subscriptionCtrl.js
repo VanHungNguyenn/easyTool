@@ -67,7 +67,7 @@ const subscriptionCtrl = {
 					tag,
 					offerId,
 					remainingProduct,
-					type,	
+					type,
 				}
 			).then((sub) => {
 				if (!sub) {
@@ -85,6 +85,7 @@ const subscriptionCtrl = {
 	deleteSubscription: async (req, res) => {
 		try {
 			const { id_subscription } = req.params
+			console.log(id_subscription)
 
 			await Subscription.findOneAndDelete({ id_subscription }).then(
 				(sub) => {
