@@ -15,6 +15,10 @@ const softwaresSchema = new mongoose.Schema(
 			type: String,
 			default: null,
 		},
+		category: {
+			type: String,
+			default: null,
+		},
 		note: {
 			type: String,
 			default: null,

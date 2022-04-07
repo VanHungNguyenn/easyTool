@@ -85,21 +85,21 @@ const subscriptionCtrl = {
 	deleteSubscription: async (req, res) => {
 		try {
 			const { id_subscription } = req.params
-			console.log(id_subscription)
+			console.log({ id_subscription })
 
-			await Subscription.findOneAndDelete({ id_subscription }).then(
-				(sub) => {
-					if (!sub) {
-						return res
-							.status(400)
-							.json({ msg: 'Subscription not found' })
-					} else {
-						return res
-							.status(200)
-							.json({ msg: 'Delete subscription successfully' })
-					}
+			await Subscription.findOneAndDelete({
+				id_subscription: Number(id_subscription),
+			}).then((sub) => {
+				if (!sub) {
+					return res
+						.status(400)
+						.json({ msg: 'Subscription not found' })
+				} else {
+					return res
+						.status(200)
+						.json({ msg: 'Delete subscription successfully' })
 				}
-			)
+			})
 		} catch (error) {
 			return res.status(500).json({ msg: error.message })
 		}

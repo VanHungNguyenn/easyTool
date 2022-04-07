@@ -9,6 +9,7 @@ const softwareCtrl = {
 				softwareImage,
 				note,
 				tag,
+				category,
 			} = req.body
 
 			if (!softwareName) {
@@ -23,6 +24,7 @@ const softwareCtrl = {
 				softwareImage,
 				note,
 				tag,
+				category,
 			})
 
 			await newSoftware.save().then(() => {
@@ -43,6 +45,7 @@ const softwareCtrl = {
 				softwareImage,
 				note,
 				tag,
+				category,
 			} = req.body
 
 			await Softwares.findOneAndUpdate(
@@ -53,6 +56,7 @@ const softwareCtrl = {
 					softwareImage,
 					note,
 					tag,
+					category,
 				}
 			).then((software) => {
 				if (!software) {

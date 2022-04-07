@@ -16,7 +16,7 @@ const softwareOfferSchema = new mongoose.Schema(
 			required: true,
 		},
 		offerDay: {
-			type: Date,
+			type: Number,
 			default: null,
 		},
 		note: {
